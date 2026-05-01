@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>IPL 2026 Fair Play</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IPL 2026 · Fair Play & Predictions</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-:root{--gold:#FFD700;--orange:#FF6B35;--green:#1A936F;--muted:#8899aa;}
+:root{--gold:#FFD700;--orange:#FF6B35;--green:#1A936F;--red:#c0392b;--muted:#8899aa;--border:rgba(255,255,255,.1);}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Nunito',sans-serif;background:radial-gradient(ellipse at 20% 50%,#1a0533 0%,#0d0d1a 60%,#001a2e 100%);min-height:100vh;color:#fff;padding-bottom:60px;}
 .app{max-width:520px;margin:0 auto;padding:0 16px;}
@@ -15,51 +15,90 @@ body{font-family:'Nunito',sans-serif;background:radial-gradient(ellipse at 20% 5
 .logo-icon{font-size:2.2rem;}
 .logo-title{font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;background:linear-gradient(135deg,#FFD700,#FF6B35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .logo-sub{font-size:.78rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-top:4px;}
-.nav{display:flex;gap:8px;margin:22px 0 0;background:rgba(255,255,255,.06);padding:5px;border-radius:14px;}
-.nav-btn{flex:1;padding:10px 0;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;background:transparent;color:var(--muted);}
-.nav-btn.active{background:linear-gradient(135deg,#FF6B35,#FFD700);color:#0d0d1a;}
-.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:24px;margin-top:22px;animation:fadeUp .35s ease both;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+.status-bar{text-align:center;font-size:.75rem;color:var(--muted);margin-top:8px;}
+.live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#1A936F;margin-right:5px;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* nav */
+.nav{display:flex;gap:7px;margin:20px 0 0;background:rgba(255,255,255,.06);padding:5px;border-radius:14px;}
+.nav-btn{flex:1;padding:10px 0;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s;background:transparent;color:var(--muted);}
+.nav-btn.active{background:linear-gradient(135deg,var(--orange),var(--gold));color:#0d0d1a;}
+
+/* card */
+.card{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:20px;padding:22px;margin-top:20px;animation:fadeUp .35s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
 .card-title{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:var(--gold);margin-bottom:16px;text-transform:uppercase;letter-spacing:.05em;}
-.section-label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+.section-label{font-size:.73rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:9px;}
 .helper{font-size:.82rem;color:var(--muted);line-height:1.6;margin-bottom:14px;}
-.divider{border:none;border-top:1px solid rgba(255,255,255,.1);margin:18px 0;}
-.select-wrap{position:relative;margin-bottom:18px;}
-.select-wrap select{width:100%;padding:13px 16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#fff;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:600;appearance:none;cursor:pointer;}
-.select-wrap::after{content:'▾';position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--gold);pointer-events:none;}
+.divider{border:none;border-top:1px solid var(--border);margin:18px 0;}
+.hidden{display:none;}
+
+/* sub-tabs (leaderboard) */
+.sub-tabs{display:flex;gap:6px;margin-bottom:18px;background:rgba(255,255,255,.05);padding:4px;border-radius:11px;}
+.sub-tab{flex:1;padding:8px 0;border:none;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.83rem;cursor:pointer;transition:all .18s;background:transparent;color:var(--muted);}
+.sub-tab.active{background:rgba(255,255,255,.12);color:#fff;}
+
+/* select */
+.select-wrap{position:relative;margin-bottom:16px;}
+.select-wrap select{width:100%;padding:12px 16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#fff;font-family:'Nunito',sans-serif;font-size:.97rem;font-weight:600;appearance:none;cursor:pointer;}
+.select-wrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--gold);pointer-events:none;}
 select option{background:#1a1a2e;color:#fff;}
+
+/* player grid */
 .player-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
-.player-btn{padding:13px 10px;border:2px solid rgba(255,255,255,.12);border-radius:13px;background:rgba(255,255,255,.04);color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .18s;}
+.player-btn{padding:13px 10px;border:2px solid rgba(255,255,255,.12);border-radius:13px;background:rgba(255,255,255,.04);color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:.93rem;cursor:pointer;transition:all .18s;}
 .player-btn:hover:not(:disabled){border-color:var(--gold);background:rgba(255,215,0,.1);transform:translateY(-2px);}
-.player-btn:disabled{opacity:.38;cursor:not-allowed;}
+.player-btn:disabled{opacity:.35;cursor:not-allowed;}
+
+/* voted badge */
 .voted-badge{display:flex;align-items:center;gap:6px;background:rgba(26,147,111,.2);border:1px solid var(--green);color:#88D498;padding:8px 16px;border-radius:20px;font-size:.85rem;font-weight:700;margin-bottom:16px;}
-.lb-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:13px;margin-bottom:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);transition:transform .15s;}
+
+/* leaderboard rows */
+.lb-row{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:13px;margin-bottom:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);transition:transform .15s;}
 .lb-row:hover{transform:translateX(3px);}
-.lb-rank{font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;width:32px;text-align:center;color:var(--muted);}
+.lb-rank{font-family:'Rajdhani',sans-serif;font-size:1.35rem;font-weight:700;width:32px;text-align:center;color:var(--muted);}
 .lb-rank.top{color:var(--gold);}
 .lb-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
 .lb-name{flex:1;font-weight:700;font-size:.95rem;}
-.lb-bar-wrap{flex:2;background:rgba(255,255,255,.08);border-radius:20px;height:8px;overflow:hidden;}
-.lb-bar{height:100%;border-radius:20px;transition:width .6s cubic-bezier(.34,1.56,.64,1);}
-.lb-pts{font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;width:40px;text-align:right;color:var(--gold);}
-.lb-pts-label{font-size:.68rem;color:var(--muted);text-align:right;}
-.input-row{display:flex;gap:10px;margin-bottom:12px;}
-.text-input{flex:1;padding:11px 14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-family:'Nunito',sans-serif;font-size:.95rem;}
+.lb-bar-wrap{flex:2;background:rgba(255,255,255,.08);border-radius:20px;height:7px;overflow:hidden;}
+.lb-bar{height:100%;border-radius:20px;transition:width .65s cubic-bezier(.34,1.56,.64,1);}
+.lb-pts{font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;width:42px;text-align:right;color:var(--gold);}
+.lb-pts-label{font-size:.67rem;color:var(--muted);text-align:right;}
+
+/* points input area */
+.pts-block{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px;}
+.pts-block .section-label{margin-bottom:12px;}
+.pts-row{display:flex;gap:8px;align-items:center;margin-bottom:10px;}
+.pts-row:last-child{margin-bottom:0;}
+.text-input{flex:1;padding:10px 13px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-family:'Nunito',sans-serif;font-size:.93rem;}
 .text-input::placeholder{color:#556;}
-.btn{padding:11px 20px;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .18s;}
-.btn-danger{background:#c0392b;color:#fff;}
-.btn-primary{background:linear-gradient(135deg,#FF6B35,#FFD700);color:#0d0d1a;}
-.small-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:5px 10px;font-size:.82rem;margin:3px;}
+.text-input.narrow{width:80px;flex:none;}
+.btn{padding:10px 18px;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .18s;white-space:nowrap;}
+.btn-primary{background:linear-gradient(135deg,var(--orange),var(--gold));color:#0d0d1a;}
+.btn-primary:hover{opacity:.88;transform:translateY(-1px);}
+.btn-danger{background:var(--red);color:#fff;}
+.btn-sm{padding:7px 13px;font-size:.82rem;}
+
+/* player tags */
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
+.small-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:5px 10px;font-size:.8rem;}
 .tag-x{cursor:pointer;color:var(--orange);font-weight:900;}
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);padding:12px 24px;border-radius:12px;font-weight:700;font-size:.95rem;z-index:999;animation:slideUp .3s ease;white-space:nowrap;pointer-events:none;}
+.input-row{display:flex;gap:9px;margin-bottom:10px;}
+
+/* recent points log */
+.log-item{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);margin-bottom:6px;font-size:.83rem;}
+.log-name{font-weight:700;}
+.log-note{color:var(--muted);font-size:.78rem;margin-top:1px;}
+.log-pts{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;}
+.log-pts.pos{color:#88D498;}
+.log-pts.neg{color:#FF6B6B;}
+
+/* toast */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);padding:11px 24px;border-radius:12px;font-weight:700;font-size:.93rem;z-index:999;animation:slideUp .3s ease;white-space:nowrap;pointer-events:none;}
 .toast.success{background:linear-gradient(135deg,#1A936F,#2A9D8F);color:#fff;}
 .toast.error{background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;}
-@keyframes slideUp{from{opacity:0;transform:translate(-50%,20px);}to{opacity:1;transform:translate(-50%,0);}}
-.hidden{display:none;}
-.live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#1A936F;margin-right:6px;animation:pulse 1.5s infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
-.status-bar{text-align:center;font-size:.75rem;color:var(--muted);margin-top:10px;}
-.loader{text-align:center;padding:30px 0;color:var(--muted);font-size:.9rem;}
+@keyframes slideUp{from{opacity:0;transform:translate(-50%,18px);}to{opacity:1;transform:translate(-50%,0);}}
+.loader{text-align:center;padding:28px 0;color:var(--muted);font-size:.88rem;}
 </style>
 </head>
 <body>
@@ -68,9 +107,9 @@ select option{background:#1a1a2e;color:#fff;}
   <div class="header">
     <div class="logo-row">
       <span class="logo-icon">🏏</span>
-      <span class="logo-title">IPL 2026 Fair Play</span>
+      <span class="logo-title">IPL 2026</span>
     </div>
-    <div class="logo-sub">WhatsApp Group Leaderboard</div>
+    <div class="logo-sub">Fair Play &amp; Predictions</div>
     <div class="status-bar"><span class="live-dot"></span>Live · shared across all devices</div>
   </div>
 
@@ -80,7 +119,7 @@ select option{background:#1a1a2e;color:#fff;}
     <button class="nav-btn" onclick="showTab('admin')">⚙️ Admin</button>
   </div>
 
-  <!-- VOTE -->
+  <!-- ── VOTE ── -->
   <div id="tab-vote" class="card">
     <div class="card-title">Cast Your Vote</div>
     <p class="helper">1 vote per day · cannot vote for yourself · reward best fair play!</p>
@@ -95,49 +134,90 @@ select option{background:#1a1a2e;color:#fff;}
     <div id="player-grid" class="player-grid"></div>
   </div>
 
-  <!-- LEADERBOARD -->
+  <!-- ── LEADERBOARD ── -->
   <div id="tab-leaderboard" class="card hidden">
     <div class="card-title">🏆 Leaderboard</div>
-    <div id="lb-list"><div class="loader">Loading scores...</div></div>
-    <hr class="divider"/>
-    <p class="helper" style="text-align:center;margin:0">Total votes cast: <strong id="vote-count">—</strong></p>
+    <div class="sub-tabs">
+      <button class="sub-tab active" onclick="switchBoard('fairplay')">🤝 Fair Play</button>
+      <button class="sub-tab" onclick="switchBoard('predictions')">🎯 Predictions</button>
+    </div>
+    <div id="lb-fairplay">
+      <div id="lb-fairplay-rows"><div class="loader">Loading…</div></div>
+      <div style="text-align:center;font-size:.8rem;color:var(--muted);margin-top:8px;">
+        Total votes: <strong id="vote-count">—</strong>
+      </div>
+    </div>
+    <div id="lb-predictions" class="hidden">
+      <div id="lb-pred-rows"><div class="loader">Loading…</div></div>
+      <div style="text-align:center;font-size:.8rem;color:var(--muted);margin-top:8px;">
+        Points awarded by admin
+      </div>
+    </div>
   </div>
 
-  <!-- ADMIN -->
+  <!-- ── ADMIN ── -->
   <div id="tab-admin" class="card hidden">
     <div class="card-title">⚙️ Admin</div>
+
+    <!-- Prediction points -->
+    <div class="section-label">Award Prediction Points</div>
+    <div class="pts-block">
+      <div class="pts-row">
+        <div class="select-wrap" style="margin:0;flex:1">
+          <select id="pts-player">
+            <option value="">— select player —</option>
+          </select>
+        </div>
+      </div>
+      <div class="pts-row">
+        <input class="text-input narrow" id="pts-value" type="number" placeholder="Pts" min="-999" max="999"/>
+        <input class="text-input" id="pts-note" placeholder="Note e.g. Match 23 correct" onkeydown="if(event.key==='Enter')awardPoints()"/>
+        <button class="btn btn-primary btn-sm" onclick="awardPoints()">Add</button>
+      </div>
+    </div>
+
+    <div class="section-label">Recent Points Log</div>
+    <div id="pts-log"><div class="loader" style="padding:14px 0">No entries yet</div></div>
+
+    <div class="divider"></div>
+
+    <!-- Manage players -->
     <div class="section-label">Manage Players</div>
-    <div id="player-tags"></div>
-    <div class="input-row" style="margin-top:10px;">
+    <div id="player-tags" class="tags"></div>
+    <div class="input-row">
       <input class="text-input" id="new-player-input" placeholder="Add player name" onkeydown="if(event.key==='Enter')addPlayer()"/>
       <button class="btn btn-primary" onclick="addPlayer()">Add</button>
     </div>
-    <hr class="divider"/>
+
+    <div class="divider"></div>
+
+    <!-- Reset -->
     <div class="section-label">Reset All Scores</div>
     <div class="input-row">
-      <input class="text-input" id="reset-pw" type="password" placeholder="Enter password"/>
+      <input class="text-input" id="reset-pw" type="password" placeholder="Enter admin password"/>
       <button class="btn btn-danger" onclick="resetScores()">Reset</button>
     </div>
-    <hr class="divider"/>
+
+    <div class="divider"></div>
     <div class="section-label">How it works</div>
     <p class="helper">
-      • 1 vote per day per person<br/>
-      • Cannot vote for yourself<br/>
-      • Votes sync in real time across all phones via Firebase<br/>
-      • Share the Glitch link in WhatsApp — everyone sees the same leaderboard<br/>
-      • Add or remove players any time from this tab
+      • 1 fair play vote per day per person · cannot self-vote<br/>
+      • Prediction points are awarded manually from this Admin tab<br/>
+      • Both leaderboards sync live across all phones via Firebase<br/>
+      • Share the GitHub Pages link in your WhatsApp group
     </p>
   </div>
 
 </div>
-<div id="toast" class="toast hidden"></div>
+<div id="toast-el" class="toast hidden"></div>
 
-<!-- Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot, increment, collection, getDocs, deleteDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot,
+         increment, collection, getDocs, writeBatch, addDoc, query,
+         orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ── Firebase config ──────────────────────────────────────
+// ── Firebase config — keep your existing values ──────────────
 const firebaseConfig = {
   apiKey: "AIzaSyCCJQ7_HkLLKnI088NqOWHHa2zoDbvpUiM",
   authDomain: "ipl-fairplay-leaderboard.firebaseapp.com",
@@ -150,49 +230,55 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 
-// ── Default players (first run only) ─────────────────────
-// EDIT THESE NAMES before uploading to Glitch
 const DEFAULT_PLAYERS = [
-  "Shilpa","Shreyas","Rashmi","Shashank","Gururaj",
-  "Sam","Supriya","Gurudath","Srikanth","Pavan"
+  "Aarav","Priya","Rohan","Sneha","Karthik",
+  "Divya","Rahul","Meera","Arjun","Lakshmi"
 ];
-
 const COLORS = [
   "#FF6B35","#FFD700","#1A936F","#2A9D8F","#E76F51",
   "#88D498","#F7C59F","#264653","#C6DABF","#004E89"
 ];
 
-// ── State ─────────────────────────────────────────────────
 let players = [];
 let activeTab = "vote";
+let activeBoardTab = "fairplay";
+window._scores = {};
+window._predScores = {};
 
 function todayKey(){ return new Date().toISOString().slice(0,10); }
 
-// ── Init: load players from Firestore ────────────────────
+// ── Init ──────────────────────────────────────────────────────
 async function init() {
-  const metaRef = doc(db, "meta", "players");
-  const snap = await getDoc(metaRef);
-  if (!snap.exists()) {
-    // First time — seed default players
-    await setDoc(metaRef, { list: DEFAULT_PLAYERS });
+  const metaSnap = await getDoc(doc(db,"meta","players"));
+  if (!metaSnap.exists()) {
+    await setDoc(doc(db,"meta","players"),{list:DEFAULT_PLAYERS});
     players = [...DEFAULT_PLAYERS];
   } else {
-    players = snap.data().list;
+    players = metaSnap.data().list;
   }
   buildSelects();
   onVoterChange();
   listenLeaderboard();
 }
 
-// ── Real-time leaderboard listener ───────────────────────
+// ── Real-time listeners ───────────────────────────────────────
 function listenLeaderboard() {
-  onSnapshot(collection(db, "scores"), snap => {
-    const scores = {};
-    snap.forEach(d => { scores[d.id] = d.data().pts || 0; });
-    if (activeTab === "leaderboard") renderLeaderboard(scores);
-    window._scores = scores;
+  // Fair play scores
+  onSnapshot(collection(db,"scores"), snap => {
+    const s = {};
+    snap.forEach(d => { s[d.id] = d.data().pts || 0; });
+    window._scores = s;
+    if (activeTab==="leaderboard" && activeBoardTab==="fairplay") renderFairPlayBoard(s);
   });
-  onSnapshot(collection(db, "votes"), snap => {
+  // Prediction scores
+  onSnapshot(collection(db,"predscores"), snap => {
+    const s = {};
+    snap.forEach(d => { s[d.id] = d.data().pts || 0; });
+    window._predScores = s;
+    if (activeTab==="leaderboard" && activeBoardTab==="predictions") renderPredBoard(s);
+  });
+  // Vote count
+  onSnapshot(collection(db,"votes"), snap => {
     window._voteCount = snap.size;
     document.getElementById("vote-count").textContent = snap.size;
     const voter = document.getElementById("voter-select").value;
@@ -200,22 +286,23 @@ function listenLeaderboard() {
   });
 }
 
-// ── Build player dropdown ─────────────────────────────────
+// ── Player selects ────────────────────────────────────────────
 function buildSelects() {
-  const sel = document.getElementById("voter-select");
-  sel.innerHTML = '<option value="">— select your name —</option>';
-  players.forEach(p => {
-    const o = document.createElement("option");
-    o.value = o.textContent = p;
-    sel.appendChild(o);
+  ["voter-select","pts-player"].forEach(id => {
+    const sel = document.getElementById(id);
+    const ph = id==="voter-select" ? "— select your name —" : "— select player —";
+    sel.innerHTML = `<option value="">${ph}</option>`;
+    players.forEach(p => {
+      const o = document.createElement("option");
+      o.value = o.textContent = p;
+      sel.appendChild(o);
+    });
   });
 }
 
 async function refreshVotedBadge(voter) {
-  const key = todayKey() + ":" + voter;
-  const snap = await getDoc(doc(db, "votes", key));
-  const badge = document.getElementById("voted-today-badge");
-  badge.classList.toggle("hidden", !snap.exists());
+  const snap = await getDoc(doc(db,"votes",todayKey()+":"+voter));
+  document.getElementById("voted-today-badge").classList.toggle("hidden",!snap.exists());
   return snap.exists();
 }
 
@@ -224,131 +311,190 @@ window.onVoterChange = async function() {
   const grid = document.getElementById("player-grid");
   grid.innerHTML = "";
   if (!voter) return;
-
   const votedToday = await refreshVotedBadge(voter);
-
   players.forEach(p => {
     const btn = document.createElement("button");
-    btn.className = "player-btn" + (p === voter ? " self" : "");
-    btn.textContent = p === voter ? p + " (you)" : p;
-    btn.disabled = votedToday || p === voter;
+    btn.className = "player-btn";
+    btn.textContent = p===voter ? p+" (you)" : p;
+    btn.disabled = votedToday || p===voter;
     btn.onclick = () => castVote(voter, p);
     grid.appendChild(btn);
   });
 };
 
-// ── Cast vote ─────────────────────────────────────────────
+// ── Cast vote ─────────────────────────────────────────────────
 async function castVote(voter, nominee) {
-  const key = todayKey() + ":" + voter;
-  const voteRef = doc(db, "votes", key);
-  const existing = await getDoc(voteRef);
-  if (existing.exists()) { toast("Already voted today!", "error"); return; }
-
-  // Save vote record
-  await setDoc(voteRef, { voter, nominee, date: todayKey() });
-
-  // Increment score
-  const scoreRef = doc(db, "scores", nominee);
+  const key = todayKey()+":"+voter;
+  const existing = await getDoc(doc(db,"votes",key));
+  if (existing.exists()) { toast("Already voted today!","error"); return; }
+  await setDoc(doc(db,"votes",key),{voter,nominee,date:todayKey()});
+  const scoreRef = doc(db,"scores",nominee);
   const scoreSnap = await getDoc(scoreRef);
-  if (scoreSnap.exists()) {
-    await updateDoc(scoreRef, { pts: increment(1) });
-  } else {
-    await setDoc(scoreRef, { pts: 1 });
-  }
-
-  toast("🏏 +1 fair play for " + nominee + "!");
+  if (scoreSnap.exists()) { await updateDoc(scoreRef,{pts:increment(1)}); }
+  else { await setDoc(scoreRef,{pts:1}); }
+  toast("🏏 +1 fair play for "+nominee+"!");
   onVoterChange();
-  setTimeout(() => showTab("leaderboard"), 1200);
+  setTimeout(()=>showTab("leaderboard"),1200);
 }
 
-// ── Render leaderboard ────────────────────────────────────
-function renderLeaderboard(scores) {
+// ── Leaderboard renders ───────────────────────────────────────
+function renderFairPlayBoard(scores) {
   scores = scores || window._scores || {};
-  const list = document.getElementById("lb-list");
   const board = [...players]
-    .map((n, i) => ({ name: n, pts: scores[n] || 0, color: COLORS[i % COLORS.length] }))
-    .sort((a, b) => b.pts - a.pts);
+    .map((n,i)=>({name:n, pts:scores[n]||0, color:COLORS[i%COLORS.length]}))
+    .sort((a,b)=>b.pts-a.pts);
   const max = board[0]?.pts || 1;
-
-  list.innerHTML = board.map((p, i) => {
-    const pct = Math.round((p.pts / max) * 100);
-    const medal = i===0?"👑":i===1?"🥈":i===2?"🥉":i+1;
-    return `<div class="lb-row">
-      <div class="lb-rank ${i<3?'top':''}">${medal}</div>
+  const medals = ["👑","🥈","🥉"];
+  document.getElementById("lb-fairplay-rows").innerHTML = board.map((p,i)=>`
+    <div class="lb-row">
+      <div class="lb-rank ${i<3?'top':''}">${i<3?medals[i]:i+1}</div>
       <div class="lb-dot" style="background:${p.color}"></div>
       <div class="lb-name">${p.name}</div>
-      <div class="lb-bar-wrap"><div class="lb-bar" style="width:${pct}%;background:${p.color}"></div></div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:${Math.round((p.pts/max)*100)}%;background:${p.color}"></div></div>
       <div><div class="lb-pts">${p.pts}</div><div class="lb-pts-label">pts</div></div>
-    </div>`;
-  }).join("");
+    </div>`).join("");
 }
 
-// ── Admin: manage players ─────────────────────────────────
+function renderPredBoard(scores) {
+  scores = scores || window._predScores || {};
+  const board = [...players]
+    .map((n,i)=>({name:n, pts:scores[n]||0, color:COLORS[i%COLORS.length]}))
+    .sort((a,b)=>b.pts-a.pts);
+  const max = board[0]?.pts || 1;
+  const medals = ["👑","🥈","🥉"];
+  document.getElementById("lb-pred-rows").innerHTML = board.map((p,i)=>`
+    <div class="lb-row">
+      <div class="lb-rank ${i<3?'top':''}">${i<3?medals[i]:i+1}</div>
+      <div class="lb-dot" style="background:${p.color}"></div>
+      <div class="lb-name">${p.name}</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:${Math.round((p.pts/Math.max(max,1))*100)}%;background:${p.color}"></div></div>
+      <div><div class="lb-pts">${p.pts}</div><div class="lb-pts-label">pts</div></div>
+    </div>`).join("");
+}
+
+// ── Sub-tab switch ────────────────────────────────────────────
+window.switchBoard = function(tab) {
+  activeBoardTab = tab;
+  document.getElementById("lb-fairplay").classList.toggle("hidden", tab!=="fairplay");
+  document.getElementById("lb-predictions").classList.toggle("hidden", tab!=="predictions");
+  document.querySelectorAll(".sub-tab").forEach((b,i)=>{
+    b.classList.toggle("active",["fairplay","predictions"][i]===tab);
+  });
+  if (tab==="fairplay") renderFairPlayBoard();
+  if (tab==="predictions") renderPredBoard();
+};
+
+// ── Award prediction points ───────────────────────────────────
+window.awardPoints = async function() {
+  const player = document.getElementById("pts-player").value;
+  const val    = parseInt(document.getElementById("pts-value").value);
+  const note   = document.getElementById("pts-note").value.trim();
+
+  if (!player) { toast("Select a player","error"); return; }
+  if (!val || isNaN(val)) { toast("Enter a points value","error"); return; }
+
+  // Update score
+  const ref = doc(db,"predscores",player);
+  const snap = await getDoc(ref);
+  if (snap.exists()) { await updateDoc(ref,{pts:increment(val)}); }
+  else { await setDoc(ref,{pts:val}); }
+
+  // Log entry
+  await addDoc(collection(db,"predlog"),{
+    player, pts:val, note: note||"—",
+    ts: Date.now()
+  });
+
+  document.getElementById("pts-value").value = "";
+  document.getElementById("pts-note").value  = "";
+  toast((val>0?"+":"")+val+" pts for "+player+"! 🎯");
+  loadPtsLog();
+};
+
+// ── Points log ────────────────────────────────────────────────
+async function loadPtsLog() {
+  const q = query(collection(db,"predlog"), orderBy("ts","desc"), limit(10));
+  const snap = await getDocs(q);
+  const el = document.getElementById("pts-log");
+  if (snap.empty) { el.innerHTML='<div class="loader" style="padding:12px 0">No entries yet</div>'; return; }
+  el.innerHTML = "";
+  snap.forEach(d => {
+    const {player,pts,note} = d.data();
+    const pos = pts >= 0;
+    el.innerHTML += `<div class="log-item">
+      <div><div class="log-name">${player}</div><div class="log-note">${note}</div></div>
+      <div class="log-pts ${pos?'pos':'neg'}">${pos?'+':''}${pts}</div>
+    </div>`;
+  });
+}
+
+// ── Admin: manage players ─────────────────────────────────────
 function renderAdminTags() {
-  const wrap = document.getElementById("player-tags");
-  wrap.innerHTML = players.map(p =>
+  document.getElementById("player-tags").innerHTML = players.map(p =>
     `<span class="small-tag">${p} <span class="tag-x" onclick="removePlayer('${p}')">×</span></span>`
   ).join("");
 }
 
 window.addPlayer = async function() {
-  const inp = document.getElementById("new-player-input");
+  const inp  = document.getElementById("new-player-input");
   const name = inp.value.trim();
-  if (!name || players.includes(name)) { toast("Enter a unique name", "error"); return; }
+  if (!name || players.includes(name)) { toast("Enter a unique name","error"); return; }
   players.push(name);
-  await setDoc(doc(db, "meta", "players"), { list: players });
+  await setDoc(doc(db,"meta","players"),{list:players});
   inp.value = "";
   buildSelects(); onVoterChange(); renderAdminTags();
-  toast(name + " added!");
+  toast(name+" added!");
 };
 
 window.removePlayer = async function(name) {
-  players = players.filter(p => p !== name);
-  await setDoc(doc(db, "meta", "players"), { list: players });
+  players = players.filter(p=>p!==name);
+  await setDoc(doc(db,"meta","players"),{list:players});
   buildSelects(); onVoterChange(); renderAdminTags();
-  toast(name + " removed");
+  toast(name+" removed");
 };
 
 window.resetScores = async function() {
   if (document.getElementById("reset-pw").value !== "RESET2026") {
-    toast("Wrong password", "error"); return;
+    toast("Wrong password","error"); return;
   }
-  // Delete all scores and votes
   const batch = writeBatch(db);
-  const [scoreSnap, voteSnap] = await Promise.all([
-    getDocs(collection(db, "scores")),
-    getDocs(collection(db, "votes"))
+  const [s1,s2,s3] = await Promise.all([
+    getDocs(collection(db,"scores")),
+    getDocs(collection(db,"votes")),
+    getDocs(collection(db,"predscores"))
   ]);
-  scoreSnap.forEach(d => batch.delete(d.ref));
-  voteSnap.forEach(d => batch.delete(d.ref));
+  s1.forEach(d=>batch.delete(d.ref));
+  s2.forEach(d=>batch.delete(d.ref));
+  s3.forEach(d=>batch.delete(d.ref));
   await batch.commit();
-  document.getElementById("reset-pw").value = "";
-  toast("Scores reset! Fresh season 🏏");
+  document.getElementById("reset-pw").value="";
+  toast("All scores reset! Fresh season 🏏");
 };
 
-// ── Tab switching ─────────────────────────────────────────
+// ── Tab switching ─────────────────────────────────────────────
 window.showTab = function(t) {
-  ["vote","leaderboard","admin"].forEach(tab => {
-    document.getElementById("tab-"+tab).classList.toggle("hidden", tab !== t);
+  ["vote","leaderboard","admin"].forEach(tab=>{
+    document.getElementById("tab-"+tab).classList.toggle("hidden",tab!==t);
   });
-  document.querySelectorAll(".nav-btn").forEach((b,i) => {
-    b.classList.toggle("active", ["vote","leaderboard","admin"][i] === t);
+  document.querySelectorAll(".nav-btn").forEach((b,i)=>{
+    b.classList.toggle("active",["vote","leaderboard","admin"][i]===t);
   });
   activeTab = t;
-  if (t === "leaderboard") renderLeaderboard();
-  if (t === "admin") renderAdminTags();
+  if (t==="leaderboard") {
+    activeBoardTab==="fairplay" ? renderFairPlayBoard() : renderPredBoard();
+  }
+  if (t==="admin") { renderAdminTags(); loadPtsLog(); }
 };
 
-// ── Toast ─────────────────────────────────────────────────
-let toastTimer;
+// ── Toast ─────────────────────────────────────────────────────
+let _tt;
 window.toast = function(msg, type="success") {
-  const el = document.getElementById("toast");
-  el.textContent = msg; el.className = "toast " + type;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.className = "toast hidden", 3000);
+  const el = document.getElementById("toast-el");
+  el.textContent=msg; el.className="toast "+type;
+  clearTimeout(_tt);
+  _tt = setTimeout(()=>el.className="toast hidden",3000);
 };
 
-// ── Start ─────────────────────────────────────────────────
 init();
 </script>
 </body>
