@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IPL 2026 Fair Play</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{--gold:#FFD700;--orange:#FF6B35;--green:#1A936F;--muted:#8899aa;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:radial-gradient(ellipse at 20% 50%,#1a0533 0%,#0d0d1a 60%,#001a2e 100%);min-height:100vh;color:#fff;padding-bottom:60px;}
+.app{max-width:520px;margin:0 auto;padding:0 16px;}
+.header{text-align:center;padding:28px 0 0;}
+.logo-row{display:flex;align-items:center;justify-content:center;gap:10px;}
+.logo-icon{font-size:2.2rem;}
+.logo-title{font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;background:linear-gradient(135deg,#FFD700,#FF6B35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logo-sub{font-size:.78rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-top:4px;}
+.nav{display:flex;gap:8px;margin:22px 0 0;background:rgba(255,255,255,.06);padding:5px;border-radius:14px;}
+.nav-btn{flex:1;padding:10px 0;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;background:transparent;color:var(--muted);}
+.nav-btn.active{background:linear-gradient(135deg,#FF6B35,#FFD700);color:#0d0d1a;}
+.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:24px;margin-top:22px;animation:fadeUp .35s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+.card-title{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:var(--gold);margin-bottom:16px;text-transform:uppercase;letter-spacing:.05em;}
+.section-label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+.helper{font-size:.82rem;color:var(--muted);line-height:1.6;margin-bottom:14px;}
+.divider{border:none;border-top:1px solid rgba(255,255,255,.1);margin:18px 0;}
+.select-wrap{position:relative;margin-bottom:18px;}
+.select-wrap select{width:100%;padding:13px 16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#fff;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:600;appearance:none;cursor:pointer;}
+.select-wrap::after{content:'▾';position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--gold);pointer-events:none;}
+select option{background:#1a1a2e;color:#fff;}
+.player-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.player-btn{padding:13px 10px;border:2px solid rgba(255,255,255,.12);border-radius:13px;background:rgba(255,255,255,.04);color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .18s;}
+.player-btn:hover:not(:disabled){border-color:var(--gold);background:rgba(255,215,0,.1);transform:translateY(-2px);}
+.player-btn:disabled{opacity:.38;cursor:not-allowed;}
+.voted-badge{display:flex;align-items:center;gap:6px;background:rgba(26,147,111,.2);border:1px solid var(--green);color:#88D498;padding:8px 16px;border-radius:20px;font-size:.85rem;font-weight:700;margin-bottom:16px;}
+.lb-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:13px;margin-bottom:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);transition:transform .15s;}
+.lb-row:hover{transform:translateX(3px);}
+.lb-rank{font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;width:32px;text-align:center;color:var(--muted);}
+.lb-rank.top{color:var(--gold);}
+.lb-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+.lb-name{flex:1;font-weight:700;font-size:.95rem;}
+.lb-bar-wrap{flex:2;background:rgba(255,255,255,.08);border-radius:20px;height:8px;overflow:hidden;}
+.lb-bar{height:100%;border-radius:20px;transition:width .6s cubic-bezier(.34,1.56,.64,1);}
+.lb-pts{font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;width:40px;text-align:right;color:var(--gold);}
+.lb-pts-label{font-size:.68rem;color:var(--muted);text-align:right;}
+.input-row{display:flex;gap:10px;margin-bottom:12px;}
+.text-input{flex:1;padding:11px 14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-family:'Nunito',sans-serif;font-size:.95rem;}
+.text-input::placeholder{color:#556;}
+.btn{padding:11px 20px;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .18s;}
+.btn-danger{background:#c0392b;color:#fff;}
+.btn-primary{background:linear-gradient(135deg,#FF6B35,#FFD700);color:#0d0d1a;}
+.small-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:5px 10px;font-size:.82rem;margin:3px;}
+.tag-x{cursor:pointer;color:var(--orange);font-weight:900;}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);padding:12px 24px;border-radius:12px;font-weight:700;font-size:.95rem;z-index:999;animation:slideUp .3s ease;white-space:nowrap;pointer-events:none;}
+.toast.success{background:linear-gradient(135deg,#1A936F,#2A9D8F);color:#fff;}
+.toast.error{background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;}
+@keyframes slideUp{from{opacity:0;transform:translate(-50%,20px);}to{opacity:1;transform:translate(-50%,0);}}
+.hidden{display:none;}
+.live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#1A936F;margin-right:6px;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.status-bar{text-align:center;font-size:.75rem;color:var(--muted);margin-top:10px;}
+.loader{text-align:center;padding:30px 0;color:var(--muted);font-size:.9rem;}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="header">
+    <div class="logo-row">
+      <span class="logo-icon">🏏</span>
+      <span class="logo-title">IPL 2026 Fair Play</span>
+    </div>
+    <div class="logo-sub">WhatsApp Group Leaderboard</div>
+    <div class="status-bar"><span class="live-dot"></span>Live · shared across all devices</div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn active" onclick="showTab('vote')">🗳 Vote</button>
+    <button class="nav-btn" onclick="showTab('leaderboard')">🏆 Board</button>
+    <button class="nav-btn" onclick="showTab('admin')">⚙️ Admin</button>
+  </div>
+
+  <!-- VOTE -->
+  <div id="tab-vote" class="card">
+    <div class="card-title">Cast Your Vote</div>
+    <p class="helper">1 vote per day · cannot vote for yourself · reward best fair play!</p>
+    <div class="section-label">Who are you?</div>
+    <div class="select-wrap">
+      <select id="voter-select" onchange="onVoterChange()">
+        <option value="">— select your name —</option>
+      </select>
+    </div>
+    <div id="voted-today-badge" class="voted-badge hidden">✅ You already voted today — come back tomorrow!</div>
+    <div class="section-label">Vote for</div>
+    <div id="player-grid" class="player-grid"></div>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <div id="tab-leaderboard" class="card hidden">
+    <div class="card-title">🏆 Leaderboard</div>
+    <div id="lb-list"><div class="loader">Loading scores...</div></div>
+    <hr class="divider"/>
+    <p class="helper" style="text-align:center;margin:0">Total votes cast: <strong id="vote-count">—</strong></p>
+  </div>
+
+  <!-- ADMIN -->
+  <div id="tab-admin" class="card hidden">
+    <div class="card-title">⚙️ Admin</div>
+    <div class="section-label">Manage Players</div>
+    <div id="player-tags"></div>
+    <div class="input-row" style="margin-top:10px;">
+      <input class="text-input" id="new-player-input" placeholder="Add player name" onkeydown="if(event.key==='Enter')addPlayer()"/>
+      <button class="btn btn-primary" onclick="addPlayer()">Add</button>
+    </div>
+    <hr class="divider"/>
+    <div class="section-label">Reset All Scores</div>
+    <p class="helper">Password: <strong>RESET2026</strong></p>
+    <div class="input-row">
+      <input class="text-input" id="reset-pw" type="password" placeholder="Enter password"/>
+      <button class="btn btn-danger" onclick="resetScores()">Reset</button>
+    </div>
+    <hr class="divider"/>
+    <div class="section-label">How it works</div>
+    <p class="helper">
+      • 1 vote per day per person<br/>
+      • Cannot vote for yourself<br/>
+      • Votes sync in real time across all phones via Firebase<br/>
+      • Share the Glitch link in WhatsApp — everyone sees the same leaderboard<br/>
+      • Add or remove players any time from this tab
+    </p>
+  </div>
+
+</div>
+<div id="toast" class="toast hidden"></div>
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot, increment, collection, getDocs, deleteDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ── Firebase config ──────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyCCJQ7_HkLLKnI088NqOWHHa2zoDbvpUiM",
+  authDomain: "ipl-fairplay-leaderboard.firebaseapp.com",
+  projectId: "ipl-fairplay-leaderboard",
+  storageBucket: "ipl-fairplay-leaderboard.firebasestorage.app",
+  messagingSenderId: "652957856040",
+  appId: "1:652957856040:web:908f2972bacb5b0fbfa01d"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+// ── Default players (first run only) ─────────────────────
+// EDIT THESE NAMES before uploading to Glitch
+const DEFAULT_PLAYERS = [
+  "Aarav","Priya","Rohan","Sneha","Karthik",
+  "Divya","Rahul","Meera","Arjun","Lakshmi"
+];
+
+const COLORS = [
+  "#FF6B35","#FFD700","#1A936F","#2A9D8F","#E76F51",
+  "#88D498","#F7C59F","#264653","#C6DABF","#004E89"
+];
+
+// ── State ─────────────────────────────────────────────────
+let players = [];
+let activeTab = "vote";
+
+function todayKey(){ return new Date().toISOString().slice(0,10); }
+
+// ── Init: load players from Firestore ────────────────────
+async function init() {
+  const metaRef = doc(db, "meta", "players");
+  const snap = await getDoc(metaRef);
+  if (!snap.exists()) {
+    // First time — seed default players
+    await setDoc(metaRef, { list: DEFAULT_PLAYERS });
+    players = [...DEFAULT_PLAYERS];
+  } else {
+    players = snap.data().list;
+  }
+  buildSelects();
+  onVoterChange();
+  listenLeaderboard();
+}
+
+// ── Real-time leaderboard listener ───────────────────────
+function listenLeaderboard() {
+  onSnapshot(collection(db, "scores"), snap => {
+    const scores = {};
+    snap.forEach(d => { scores[d.id] = d.data().pts || 0; });
+    if (activeTab === "leaderboard") renderLeaderboard(scores);
+    window._scores = scores;
+  });
+  onSnapshot(collection(db, "votes"), snap => {
+    window._voteCount = snap.size;
+    document.getElementById("vote-count").textContent = snap.size;
+    const voter = document.getElementById("voter-select").value;
+    if (voter) refreshVotedBadge(voter);
+  });
+}
+
+// ── Build player dropdown ─────────────────────────────────
+function buildSelects() {
+  const sel = document.getElementById("voter-select");
+  sel.innerHTML = '<option value="">— select your name —</option>';
+  players.forEach(p => {
+    const o = document.createElement("option");
+    o.value = o.textContent = p;
+    sel.appendChild(o);
+  });
+}
+
+async function refreshVotedBadge(voter) {
+  const key = todayKey() + ":" + voter;
+  const snap = await getDoc(doc(db, "votes", key));
+  const badge = document.getElementById("voted-today-badge");
+  badge.classList.toggle("hidden", !snap.exists());
+  return snap.exists();
+}
+
+window.onVoterChange = async function() {
+  const voter = document.getElementById("voter-select").value;
+  const grid = document.getElementById("player-grid");
+  grid.innerHTML = "";
+  if (!voter) return;
+
+  const votedToday = await refreshVotedBadge(voter);
+
+  players.forEach(p => {
+    const btn = document.createElement("button");
+    btn.className = "player-btn" + (p === voter ? " self" : "");
+    btn.textContent = p === voter ? p + " (you)" : p;
+    btn.disabled = votedToday || p === voter;
+    btn.onclick = () => castVote(voter, p);
+    grid.appendChild(btn);
+  });
+};
+
+// ── Cast vote ─────────────────────────────────────────────
+async function castVote(voter, nominee) {
+  const key = todayKey() + ":" + voter;
+  const voteRef = doc(db, "votes", key);
+  const existing = await getDoc(voteRef);
+  if (existing.exists()) { toast("Already voted today!", "error"); return; }
+
+  // Save vote record
+  await setDoc(voteRef, { voter, nominee, date: todayKey() });
+
+  // Increment score
+  const scoreRef = doc(db, "scores", nominee);
+  const scoreSnap = await getDoc(scoreRef);
+  if (scoreSnap.exists()) {
+    await updateDoc(scoreRef, { pts: increment(1) });
+  } else {
+    await setDoc(scoreRef, { pts: 1 });
+  }
+
+  toast("🏏 +1 fair play for " + nominee + "!");
+  onVoterChange();
+  setTimeout(() => showTab("leaderboard"), 1200);
+}
+
+// ── Render leaderboard ────────────────────────────────────
+function renderLeaderboard(scores) {
+  scores = scores || window._scores || {};
+  const list = document.getElementById("lb-list");
+  const board = [...players]
+    .map((n, i) => ({ name: n, pts: scores[n] || 0, color: COLORS[i % COLORS.length] }))
+    .sort((a, b) => b.pts - a.pts);
+  const max = board[0]?.pts || 1;
+
+  list.innerHTML = board.map((p, i) => {
+    const pct = Math.round((p.pts / max) * 100);
+    const medal = i===0?"👑":i===1?"🥈":i===2?"🥉":i+1;
+    return `<div class="lb-row">
+      <div class="lb-rank ${i<3?'top':''}">${medal}</div>
+      <div class="lb-dot" style="background:${p.color}"></div>
+      <div class="lb-name">${p.name}</div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:${pct}%;background:${p.color}"></div></div>
+      <div><div class="lb-pts">${p.pts}</div><div class="lb-pts-label">pts</div></div>
+    </div>`;
+  }).join("");
+}
+
+// ── Admin: manage players ─────────────────────────────────
+function renderAdminTags() {
+  const wrap = document.getElementById("player-tags");
+  wrap.innerHTML = players.map(p =>
+    `<span class="small-tag">${p} <span class="tag-x" onclick="removePlayer('${p}')">×</span></span>`
+  ).join("");
+}
+
+window.addPlayer = async function() {
+  const inp = document.getElementById("new-player-input");
+  const name = inp.value.trim();
+  if (!name || players.includes(name)) { toast("Enter a unique name", "error"); return; }
+  players.push(name);
+  await setDoc(doc(db, "meta", "players"), { list: players });
+  inp.value = "";
+  buildSelects(); onVoterChange(); renderAdminTags();
+  toast(name + " added!");
+};
+
+window.removePlayer = async function(name) {
+  players = players.filter(p => p !== name);
+  await setDoc(doc(db, "meta", "players"), { list: players });
+  buildSelects(); onVoterChange(); renderAdminTags();
+  toast(name + " removed");
+};
+
+window.resetScores = async function() {
+  if (document.getElementById("reset-pw").value !== "RESET2026") {
+    toast("Wrong password", "error"); return;
+  }
+  // Delete all scores and votes
+  const batch = writeBatch(db);
+  const [scoreSnap, voteSnap] = await Promise.all([
+    getDocs(collection(db, "scores")),
+    getDocs(collection(db, "votes"))
+  ]);
+  scoreSnap.forEach(d => batch.delete(d.ref));
+  voteSnap.forEach(d => batch.delete(d.ref));
+  await batch.commit();
+  document.getElementById("reset-pw").value = "";
+  toast("Scores reset! Fresh season 🏏");
+};
+
+// ── Tab switching ─────────────────────────────────────────
+window.showTab = function(t) {
+  ["vote","leaderboard","admin"].forEach(tab => {
+    document.getElementById("tab-"+tab).classList.toggle("hidden", tab !== t);
+  });
+  document.querySelectorAll(".nav-btn").forEach((b,i) => {
+    b.classList.toggle("active", ["vote","leaderboard","admin"][i] === t);
+  });
+  activeTab = t;
+  if (t === "leaderboard") renderLeaderboard();
+  if (t === "admin") renderAdminTags();
+};
+
+// ── Toast ─────────────────────────────────────────────────
+let toastTimer;
+window.toast = function(msg, type="success") {
+  const el = document.getElementById("toast");
+  el.textContent = msg; el.className = "toast " + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.className = "toast hidden", 3000);
+};
+
+// ── Start ─────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
